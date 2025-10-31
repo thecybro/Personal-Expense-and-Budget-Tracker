@@ -7,11 +7,10 @@ from utils.file_manager import index_finder
 from utils.validator import validate_float
 from utils import destroyer
 
-class AddExpenseFrame(ctk.CTkToplevel):
-    def __init__(self, master, filename, show_menu_callback):
+class AddExpenseWindow(ctk.CTkToplevel):
+    def __init__(self, master, filename):
         super().__init__(master)
         self.filename = filename
-        self.show_menu_callback = show_menu_callback
 
         self.title("Add Category")
 
@@ -24,22 +23,22 @@ class AddExpenseFrame(ctk.CTkToplevel):
         try:
             ctk.CTkLabel(self, text="Enter the appropriate values: ").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
-            category_entry = ctk.CTkEntry(self, placeholder_text="Category")
-            category_entry.grid(row=1, column=0, sticky='nsew', padx=10, pady=10)
+            self.category_entry = ctk.CTkEntry(self, placeholder_text="Category")
+            self.category_entry.grid(row=1, column=0, sticky='nsew', padx=10, pady=10)
 
             validate_cmd = self.register(validate_float)
 
-            amount_entry = ctk.CTkEntry(self, placeholder_text="Amount")
-            amount_entry.configure(validate="key", validatecommand = (validate_cmd, "%P"))
-            amount_entry.grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
+            self.amount_entry = ctk.CTkEntry(self, placeholder_text="Amount")
+            self.amount_entry.configure(validate="key", validatecommand = (validate_cmd, "%P"))
+            self.amount_entry.grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
 
             ctk.CTkLabel(self, text="Optional entries:-").grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
             
-            date_entry = ctk.CTkEntry(self, placeholder_text="Date in YYYY:MM:DD format")
-            date_entry.grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
+            self.date_entry = ctk.CTkEntry(self, placeholder_text="Date in YYYY:MM:DD format")
+            self.date_entry.grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
 
-            note_entry = ctk.CTkEntry(self, placeholder_text="Notes")
-            note_entry.grid(row=5, column=0, sticky='nsew', padx=10, pady=10)
+            self.note_entry = ctk.CTkEntry(self, placeholder_text="Notes")
+            self.note_entry.grid(row=5, column=0, sticky='nsew', padx=10, pady=10)
             
             ctk.CTkButton(self, text="Add", command=self.save_expense).grid(row=6, column=0, sticky='nsew', padx=10, pady=10)
 

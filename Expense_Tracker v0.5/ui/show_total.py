@@ -2,11 +2,10 @@ import pandas as pd
 import tkinter.messagebox as mb
 import customtkinter as ctk
 
-class ShowTotalFrame(ctk.CTkToplevel):
-    def __init__(self, master, filename, show_menu_callback):
+class ShowTotalWindow(ctk.CTkToplevel):
+    def __init__(self, master, filename):
         super().__init__(master)
         self.filename = filename
-        self.show_menu_callback = show_menu_callback
 
         self.title("Total Display")
 

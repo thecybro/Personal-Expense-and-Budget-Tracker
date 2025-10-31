@@ -2,7 +2,7 @@ import pandas as pd
 
 
 """Finds the index for the newly created category."""
-def index_finder():
+def index_finder(filename):
     df = pd.read_csv(filename)
 
     if df.empty:
@@ -12,7 +12,7 @@ def index_finder():
         return df["Index"].max()+1 
 
 """Sorts the csv file in an ascending order."""
-def file_sorter():
+def file_sorter(filename):
 
     df = pd.read_csv(filename)
 

@@ -5,11 +5,10 @@ import tkinter.messagebox as mb
 from utils.file_manager import file_sorter, file_correcter
 from utils import destroyer
 
-class DeleteRowFrame(ctk.CTkToplevel):
-    def __init__(self, master, filename, show_menu_callback):
+class DeleteRowWindow(ctk.CTkToplevel):
+    def __init__(self, master, filename):
         super().__init__(master)
         self.filename = filename
-        self.show_menu_callback = show_menu_callback
 
         self.title("Delete Row")
 

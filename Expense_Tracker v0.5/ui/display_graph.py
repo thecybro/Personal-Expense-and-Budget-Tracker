@@ -4,11 +4,10 @@ import tkinter.messagebox as mb
 
 from utils import destroyer
 
-class DisplayGraphFrame(ctk.CTkToplevel):
-    def __init__(self, master, filename, show_menu_callback):
+class DisplayGraphWindow(ctk.CTkToplevel):
+    def __init__(self, master, filename):
         super().__init__(master)
         self.filename = filename
-        self.show_menu_callback = show_menu_callback
 
         self.title("Display Graph")
 

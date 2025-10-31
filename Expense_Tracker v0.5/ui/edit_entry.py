@@ -6,11 +6,10 @@ from database.entry_handler import edit_entry
 from utils.file_manager import file_sorter, file_correcter
 from utils import destroyer
 
-class EditEntryFrame(ctk.CTkToplevel):
-    def __init__(self, master, filename, show_menu_callback):
+class EditEntryWindow(ctk.CTkToplevel):
+    def __init__(self, master, filename):
         super.__init__(master)
         self.filename = filename
-        self.show_menu_callback = show_menu_callback
 
         self.title("Edit Category") 
 
