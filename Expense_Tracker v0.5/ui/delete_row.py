@@ -6,15 +6,15 @@ from utils.file_manager import file_sorter, file_correcter
 from utils import destroyer
 
 class DeleteRowWindow(ctk.CTkToplevel):
-    def __init__(self, master, filename):
+    def __init__(self, master, path):
         super().__init__(master)
-        self.filename = filename
+        self.path = path
 
         self.title("Delete Row")
 
-        file_sorter(self.filename)
+        file_sorter(self.path)
         
-        df = pd.read_csv(self.filename)
+        df = pd.read_csv(self.path)
 
         available_rows = df["Category"].values
         rows_count = len(available_rows)
@@ -32,12 +32,12 @@ class DeleteRowWindow(ctk.CTkToplevel):
             delete_row_frame.rowconfigure(i, weight=1)
         
         try:
-            index_var = ctk.IntVar()
+            self.index_var = ctk.IntVar()
 
             ctk.CTkLabel(delete_row_frame, text="Choose the category of the row you want to delete:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             for i, category in enumerate(available_rows, start=1):
-                ctk.CTkRadioButton(delete_row_frame, text=category, variable=index_var, value=i).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                ctk.CTkRadioButton(delete_row_frame, text=category, variable=self.index_var, value=i).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
             r = rows_count + 1
 
@@ -51,14 +51,14 @@ class DeleteRowWindow(ctk.CTkToplevel):
 
 
     #To delete the row
-    def delete_row():
+    def delete_row(self):
         try:
-            index = index_var.get()
+            index = self.index_var.get()
 
             df = df[df["Index"] != index]
-            df.to_csv(self.filename, index=False)
+            df.to_csv(self.path, index=False)
 
-            file_correcter(self.filename)
+            file_correcter(self.path)
 
             mb.showinfo("Success",f"Row with index '{index}' has been deleted.")
 

@@ -3,20 +3,20 @@ import pandas as pd
 import tkinter.messagebox as mb
 
 from database.entry_handler import edit_entry
-from utils.file_manager import file_sorter, file_correcter
+from utils.file_manager import file_sorter, file_correcter, validate_int
 from utils import destroyer
 
 class EditEntryWindow(ctk.CTkToplevel):
-    def __init__(self, master, filename):
+    def __init__(self, master, path):
         super.__init__(master)
-        self.filename = filename
+        self.path = path
 
         self.title("Edit Category") 
 
         
-        file_sorter(self.filename)
+        file_sorter(self.path)
 
-        df = pd.read_csv(self.filename)
+        df = pd.read_csv(self.path)
 
         available_indexes = df["Index"].values
         indexes_count = len(available_indexes)
@@ -53,22 +53,22 @@ class EditEntryWindow(ctk.CTkToplevel):
         try:
             validate_cmd = self.register(validate_int)
 
-            index_var = ctk.IntVar()
+            self.index_var = ctk.IntVar()
             ctk.CTkLabel(indexes_frame, text="Choose the index:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             for i,index in enumerate(available_indexes, start=1):
-                ctk.CTkRadioButton(indexes_frame, text=index, variable=index_var, value=index).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                ctk.CTkRadioButton(indexes_frame, text=index, variable=self.index_var, value=index).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
-            column_var = ctk.StringVar()
+            self.column_var = ctk.StringVar()
             ctk.CTkLabel(columns_frame, text="Choose the column: ").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             for i,column in enumerate(available_columns, start=1):
                 if column != "Index" and column != "Date":
-                    ctk.CTkRadioButton(columns_frame, text=column, variable=column_var, value=column).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                    ctk.CTkRadioButton(columns_frame, text=column, variable=self.column_var, value=column).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
-            value_var = ctk.StringVar()
+            self.value_var = ctk.StringVar()
             ctk.CTkLabel(submit_frame, text="Enter new value: ").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkEntry(submit_frame, textvariable=value_var).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
+            ctk.CTkEntry(submit_frame, textvariable=self.value_var).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
             
             ctk.CTkButton(submit_frame, text="Submit", command=self.edit_entry).grid(row=1, column=0, sticky='nsew', padx=10, pady=10)
 
@@ -81,16 +81,16 @@ class EditEntryWindow(ctk.CTkToplevel):
     #To edit the entry
     def edit_entry(self):
         try:
-            index = index_var.get()
-            column = column_var.get()
-            value = value_var.get().strip().capitalize()
+            index = self.index_var.get()
+            column = self.column_var.get()
+            value = self.value_var.get().strip().capitalize()
 
             if not value:
                 mb.showwarning("Error","New value not entered..\nPlease enter everything..")
                 return
 
-            edit_entry(filename, index, column, value)
-            file_correcter(self.filename)
+            edit_entry(self.path, index, column, value)
+            file_correcter(self.path)
 
             mb.showinfo("Success",f"Updated column '{column}' of index '{index}' to '{value}'.")
 

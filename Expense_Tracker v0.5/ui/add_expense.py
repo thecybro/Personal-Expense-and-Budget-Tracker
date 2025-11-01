@@ -8,9 +8,9 @@ from utils.validator import validate_float
 from utils import destroyer
 
 class AddExpenseWindow(ctk.CTkToplevel):
-    def __init__(self, master, filename):
+    def __init__(self, master, path):
         super().__init__(master)
-        self.filename = filename
+        self.path = path
 
         self.title("Add Category")
 
@@ -71,8 +71,8 @@ class AddExpenseWindow(ctk.CTkToplevel):
             if not notes:
                 notes = " "
 
-            index = index_finder(self.filename)
-            add_entry(self.filename, index, date, category, amount, notes)
+            index = index_finder(self.path)
+            add_entry(self.path,  index, date, category, amount, notes)
             
             mb.showinfo("Success",f"Category '{category}' has been added..")
             self.destroy()

@@ -3,22 +3,13 @@ import tkinter.messagebox as mb
 import customtkinter as ctk
 
 class ShowTotalWindow(ctk.CTkToplevel):
-    def __init__(self, master, filename):
+    def __init__(self, master, path):
         super().__init__(master)
-        self.filename = filename
+        self.path = path
 
         self.title("Total Display")
 
-        df = pd.read_csv(self.filename)
-
-
-        total_display_frame = ctk.CTkFrame(self)
-        total_display_frame.pack(fill="both", expand=True)
-
-        #total_display_frame configuration
-        for i in range(1):
-            total_display_frame.rowconfigure(i, weight=1)
-            total_display_frame.columnconfigure(i, weight=1)
+        df = pd.read_csv(self.path)
 
         try:
 
@@ -28,7 +19,7 @@ class ShowTotalWindow(ctk.CTkToplevel):
             for Amount in Amounts:
                 total += Amount
             
-            ctk.CTkLabel(total_display_frame, text=f"Your total spent is {total}").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            mb.showinfo("Total Spent",f"Your total spent is {total}")
 
         except ValueError as e:
             mb.showwarning("Error",f"Error occured!!: {e}")

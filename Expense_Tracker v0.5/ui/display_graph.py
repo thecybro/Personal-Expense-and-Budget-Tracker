@@ -1,13 +1,14 @@
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
+import matplotlib.pyplot as plt
 
 from utils import destroyer
 
 class DisplayGraphWindow(ctk.CTkToplevel):
-    def __init__(self, master, filename):
+    def __init__(self, master, path):
         super().__init__(master)
-        self.filename = filename
+        self.path = path
 
         self.title("Display Graph")
 
@@ -42,20 +43,20 @@ class DisplayGraphWindow(ctk.CTkToplevel):
 
         try:
             #Categories selection
-            category_selection_var = ctk.StringVar()
+            self.category_selection_var = ctk.StringVar()
 
             ctk.CTkLabel(input_frame, text="Choose appropriate option:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
-            ctk.CTkRadioButton(input_frame, text="Select Categories", variable=category_selection_var, value="Select categories").grid(row=1, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkRadioButton(input_frame, text="Include all categories", variable=category_selection_var, value="Include all categories").grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(input_frame, text="Select Categories", variable=self.category_selection_var, value="Select categories").grid(row=1, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(input_frame, text="Include all categories", variable=self.category_selection_var, value="Include all categories").grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
 
             #Graph type selection
-            graph_type = ctk.StringVar()
+            self.graph_type = ctk.StringVar()
 
             ctk.CTkLabel(graph_selection_frame, text="Select the graph type:").grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
 
             for i, bar in enumerate(bars, start=4):
-                ctk.CTkRadioButton(graph_selection_frame, text=bar.capitalize(), variable=graph_type, value=bar).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                ctk.CTkRadioButton(graph_selection_frame, text=bar.capitalize(), variable=self.graph_type, value=bar).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
             
             ctk.CTkButton(submit_frame, text="Submit", command = self.deploy_graph).grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
@@ -70,10 +71,10 @@ class DisplayGraphWindow(ctk.CTkToplevel):
     #To deploy the graph
     def deploy_graph(self):
         try:
-            df = pd.read_csv(self.filename)
+            df = pd.read_csv(self.path)
 
-            graph = graph_type.get()
-            category_choice = category_selection_var.get()
+            graph = self.graph_type.get()
+            category_choice = self.category_selection_var.get()
 
             if not graph:
                 mb.showwarning("Error", "Please select a graph type.")

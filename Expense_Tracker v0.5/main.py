@@ -1,5 +1,6 @@
-import customtkinter as ctk
 import os
+from pathlib import Path
+import customtkinter as ctk
 from tkinter import messagebox as mb
 
 from utils import destroyer
@@ -13,7 +14,8 @@ from ui.show_total import ShowTotalWindow
 
 filename = "Expenses.csv"
 
-path = f"PROJECTS\Personal Expense and Budget Tracker\Expense_Tracker v0.5\{filename}"
+base_dir = Path(__file__).parent
+path = base_dir/filename
 
 if not (os.path.exists(filename)):
         with open(path, 'w') as f:
@@ -55,22 +57,22 @@ class ExpenseTracker(ctk.CTk):
             self.destroy()
 
     def show_add_expense(self):
-        AddExpenseWindow(self, filename)
+        AddExpenseWindow(self, path)
 
     def show_edit_entry(self):
-        EditEntryWindow(self, filename)
+        EditEntryWindow(self, path)
 
     def show_delete_row(self):
-        DeleteRowWindow(self, filename)
+        DeleteRowWindow(self, path)
 
     def show_delete_column_values(self):
-        DeleteColumnValuesWindow(self, filename)
+        DeleteColumnValuesWindow(self, path)
 
     def show_display_graph(self):
-        DisplayGraphWindow(self, filename)
+        DisplayGraphWindow(self, path)
 
     def show_total(self):
-        ShowTotalWindow(self, filename)
+        ShowTotalWindow(self, path)
     
 if __name__ == "__main__":
     app = ExpenseTracker()

@@ -6,15 +6,15 @@ from utils.file_manager import file_sorter, file_correcter
 from utils import destroyer
 
 class DeleteColumnValuesWindow(ctk.CTkToplevel):
-    def __init__(self, master, filname):
+    def __init__(self, master, path):
         super().__init__(master)
-        self.filename = filename
+        self.path = path
 
         self.title("Delete Column Values")
 
-        file_sorter(self.filename)
+        file_sorter(self.path)
 
-        df = pd.read_csv(self.filename)
+        df = pd.read_csv(self.path)
 
         available_columns = df.columns.tolist()
         columns_count = len(available_columns)
@@ -38,13 +38,13 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
 
 
         try:      
-            choice = ctk.StringVar(value="")
+            self.choice = ctk.StringVar(value="")
 
             ctk.CTkLabel(columns_display_frame, text="Choose the column whose values you wanna delete:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             for i,column in enumerate(available_columns, start=1):
                 if column != "Index":
-                    ctk.CTkRadioButton(columns_display_frame, text=column,variable=choice, value=column, command=self.delete_column_values).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                    ctk.CTkRadioButton(columns_display_frame, text=column,variable=self.choice, value=column, command=self.delete_column_values).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
             ctk.CTkButton(delete_column_values_frame, text="Exit", command=lambda:destroyer(self)).grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
@@ -54,15 +54,17 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
 
 
     #To delete column values
-    def delete_column_values():
+    def delete_column_values(self):
         try:
-            column = choice.get()
+            column = self.choice.get()
+
+            df = pd.read_csv(self.path)
 
             df[column] = ""
 
-            df.to_csv(self.filename, index=False)
+            df.to_csv(self.path, index=False)
 
-            file_correcter(self.filename)
+            file_correcter(self.path)
 
             mb.showinfo("Success",f"Values of column '{column}' has been deleted successfully.")
 
