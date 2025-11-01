@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 """Finds the index for the newly created category."""
 def index_finder(filename):
     df = pd.read_csv(filename)
@@ -21,7 +20,7 @@ def file_sorter(filename):
     df.to_csv(filename, index=False)
 
 """Re-corrects the index column"""
-def file_correcter():
+def file_correcter(filename):
 
     df = pd.read_csv(filename)
 

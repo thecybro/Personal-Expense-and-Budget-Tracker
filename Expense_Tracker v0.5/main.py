@@ -64,7 +64,7 @@ class ExpenseTracker(ctk.CTk):
         DeleteRowWindow(self, filename)
 
     def show_delete_column_values(self):
-        DeleteColumnValues(self, filename)
+        DeleteColumnValuesWindow(self, filename)
 
     def show_display_graph(self):
         DisplayGraphWindow(self, filename)
