@@ -1,14 +1,16 @@
+#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 import matplotlib.pyplot as plt
 
-from utils import destroyer
+from utils.destroyer import destroyer
 
 class DisplayGraphWindow(ctk.CTkToplevel):
-    def __init__(self, master, path):
+    def __init__(self, master, path, menu_callback):
         super().__init__(master)
         self.path = path
+        self.menu_callback = menu_callback
 
         self.title("Display Graph")
 
@@ -37,7 +39,7 @@ class DisplayGraphWindow(ctk.CTkToplevel):
             graph_selection_frame.columnconfigure(i, weight=1)
              
         #submit_frame configuration
-        for i in range(2):
+        for i in range(1):
             submit_frame.rowconfigure(i, weight=1)
             submit_frame.columnconfigure(i, weight=1)
 
@@ -61,11 +63,13 @@ class DisplayGraphWindow(ctk.CTkToplevel):
             
             ctk.CTkButton(submit_frame, text="Submit", command = self.deploy_graph).grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
-            ctk.CTkButton(submit_frame, text="Exit", command = lambda:destroyer(self)).grid(row=1, column=1, sticky='nsew', padx=10, pady=10)
+            ctk.CTkButton(submit_frame, text="Exit", command = lambda:destroyer(self)).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
 
         except ValueError as e:
             mb.showwarning("Error",f"Some error occured!!: {e}")
             self.destroy()
+
+            self.menu_callback()
 
 
     #To deploy the graph
@@ -78,6 +82,7 @@ class DisplayGraphWindow(ctk.CTkToplevel):
 
             if not graph:
                 mb.showwarning("Error", "Please select a graph type.")
+                self.destroy()
                 return
 
             available_categories = df["Category"].unique()
@@ -102,20 +107,26 @@ class DisplayGraphWindow(ctk.CTkToplevel):
                     selected = [cat for cat, var in selected_vars.items() if var.get()]
                     if not selected:
                         mb.showwarning("Error", "Please select at least one category.")
+                        win.destroy()
                         return
 
                     data = df[df["Category"].isin(selected)].groupby("Category")["Amount"].sum()
 
                     plt.figure()
+
                     if graph == "pie":
                         data.plot(kind="pie", autopct='%1.1f%%')
+                        win.destroy()
                     else:
                         data.plot(kind=graph)
+                        win.destroy()
 
                     plt.title("Category vs Amount")
                     plt.xlabel("Category")
                     plt.ylabel("Amount")
                     plt.show()
+
+                    self.menu_callback()
 
                 ctk.CTkButton(graph_deploy_frame, text="Show Graph", command=deploy).grid(row=len(available_categories)+1, column=0, padx=10, pady=10)
                 ctk.CTkButton(graph_deploy_frame, text="Exit", command=lambda: destroyer(win)).grid(row=len(available_categories)+2, column=0, padx=10, pady=10)
@@ -132,9 +143,13 @@ class DisplayGraphWindow(ctk.CTkToplevel):
                 plt.ylabel("Amount")
                 plt.show()
 
+                self.menu_callback()
+
         except Exception as e:
             mb.showwarning("Error", f"Some error occurred: {e}")
             if 'win' in locals():
                 win.destroy()
+
+                self.menu_callback()
 
 

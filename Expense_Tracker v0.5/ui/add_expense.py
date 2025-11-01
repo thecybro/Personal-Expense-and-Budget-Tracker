@@ -1,21 +1,26 @@
-import customtkinter as ctk
-import tkinter.messagebox as mb
+#Built-in modules
 from datetime import datetime
 
+#External modules
+import customtkinter as ctk
+import tkinter.messagebox as mb
+
+#Custom modules
 from database.entry_handler import add_entry
 from utils.file_manager import index_finder
 from utils.validator import validate_float
 from utils import destroyer
 
 class AddExpenseWindow(ctk.CTkToplevel):
-    def __init__(self, master, path):
+    def __init__(self, master, path, menu_callback):
         super().__init__(master)
         self.path = path
+        self.menu_callback = menu_callback
 
         self.title("Add Category")
 
         #frame configuration
-        for i in range(7):
+        for i in range(5):
             self.rowconfigure(i, weight=1)
             self.rowconfigure(i, weight=1)
 
@@ -31,42 +36,39 @@ class AddExpenseWindow(ctk.CTkToplevel):
             self.amount_entry = ctk.CTkEntry(self, placeholder_text="Amount")
             self.amount_entry.configure(validate="key", validatecommand = (validate_cmd, "%P"))
             self.amount_entry.grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
-
-            ctk.CTkLabel(self, text="Optional entries:-").grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
             
-            self.date_entry = ctk.CTkEntry(self, placeholder_text="Date in YYYY:MM:DD format")
-            self.date_entry.grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
-
             self.note_entry = ctk.CTkEntry(self, placeholder_text="Notes")
-            self.note_entry.grid(row=5, column=0, sticky='nsew', padx=10, pady=10)
+            self.note_entry.grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
             
-            ctk.CTkButton(self, text="Add", command=self.save_expense).grid(row=6, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkButton(self, text="Add", command=self.save_expense).grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
 
-            ctk.CTkButton(self, text="Exit", command = lambda:destroyer(self)).grid(row=6, column=1, sticky='nsew', padx=10, pady=10)
+            ctk.CTkButton(self, text="Exit", command = lambda:destroyer(self)).grid(row=4, column=1, sticky='nsew', padx=10, pady=10)
     
         except ValueError as e:
             mb.showwarning("Error",f"Some error occured!!: {e}")
             self.destroy()
+
+            self.menu_callback()
         
     #To save the expense
     def save_expense(self):
         try:
             category = self.category_entry.get().strip().capitalize()
             amount = float(self.amount_entry.get())
-            date = self.date_entry.get().strip()
             notes = self.note_entry.get().strip()
 
             if not category:
                 mb.showwarning("Error","Category is needed!!")
+                self.destroy()
                 return 
             
             if not amount:
                 mb.showwarning("Error","Amount is needed!!")
+                self.destroy()
                 return 
             
-            if not date:
-                current_time = datetime.now()
-                date = current_time.strftime("%Y:%m:%d")
+            current_time = datetime.now()
+            date = current_time.strftime("%Y:%m:%d")
 
             if not notes:
                 notes = " "
@@ -77,6 +79,10 @@ class AddExpenseWindow(ctk.CTkToplevel):
             mb.showinfo("Success",f"Category '{category}' has been added..")
             self.destroy()
 
+            self.menu_callback()
+
         except ValueError as e:
             mb.showwarning("Error",f"Error occured!!: {e}")
             self.destroy()
+
+            self.menu_callback()

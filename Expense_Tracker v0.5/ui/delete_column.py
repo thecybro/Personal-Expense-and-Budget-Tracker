@@ -1,14 +1,17 @@
+#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 
+#Custom modules
 from utils.file_manager import file_sorter, file_correcter
-from utils import destroyer
+from utils.destroyer import destroyer
 
 class DeleteColumnValuesWindow(ctk.CTkToplevel):
-    def __init__(self, master, path):
+    def __init__(self, master, path, menu_callback):
         super().__init__(master)
         self.path = path
+        self.menu_callback = menu_callback
 
         self.title("Delete Column Values")
 
@@ -52,6 +55,8 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
             mb.showwarning("Error",f"Some error occured!!: {e}")
             self.destroy()
 
+            self.menu_callback()
+
 
     #To delete column values
     def delete_column_values(self):
@@ -70,6 +75,10 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
 
             self.destroy()
 
+            self.menu_callback()
+
         except ValueError as e:
             mb.showwarning("Error",f"Some error occured!!: {e}")
             self.destroy()
+
+            self.menu_callback()

@@ -1,15 +1,19 @@
+#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 
+#Custom modules
 from database.entry_handler import edit_entry
-from utils.file_manager import file_sorter, file_correcter, validate_int
-from utils import destroyer
+from utils.file_manager import file_sorter, file_correcter
+from utils.validator import validate_int 
+from utils.destroyer import destroyer
 
 class EditEntryWindow(ctk.CTkToplevel):
-    def __init__(self, master, path):
-        super.__init__(master)
+    def __init__(self, master, path, menu_callback):
+        super().__init__(master)
         self.path = path
+        self.menu_callback = menu_callback
 
         self.title("Edit Category") 
 
@@ -78,6 +82,8 @@ class EditEntryWindow(ctk.CTkToplevel):
             mb.showwarning("Error",f"Error detected..{e}")
             self.destroy()
 
+            self.menu_callback()
+
     #To edit the entry
     def edit_entry(self):
         try:
@@ -85,8 +91,24 @@ class EditEntryWindow(ctk.CTkToplevel):
             column = self.column_var.get()
             value = self.value_var.get().strip().capitalize()
 
+            if not (index and column and value):
+                mb.showwarning("Error","Neccessary information has to be entered/selected!!")
+                self.destroy()
+                return
+
+            if not index:
+                mb.showwarning("Error","Index not selected!!\nPlease select an index..")
+                self.destroy()
+                return
+
+            if not column:
+                mb.showwarning("Error","Column not selected!!\nPlease select a column..")
+                self.destroy()
+                return
+
             if not value:
-                mb.showwarning("Error","New value not entered..\nPlease enter everything..")
+                mb.showwarning("Error","New value not entered!!\nPlease enter new value..")
+                self.destroy()
                 return
 
             edit_entry(self.path, index, column, value)
@@ -96,6 +118,10 @@ class EditEntryWindow(ctk.CTkToplevel):
 
             self.destroy()
 
+            self.menu_callback()
+
         except ValueError as e:
             mb.showwarning("Error",f"Error occured!!: {e}")
             self.destroy()
+
+            self.menu_callback()
