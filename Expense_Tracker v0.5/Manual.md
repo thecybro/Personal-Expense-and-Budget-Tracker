@@ -1,4 +1,4 @@
-#About Expense Tracker
+# About Expense Tracker
 
 **Manual of this app will soon be released.**
 
