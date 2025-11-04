@@ -14,11 +14,9 @@ And the good part is that it's very simple to use and you can add/manage expense
         ª   
         +---Expense_Tracker v0.5
             ª   main.py
-            ª   README.md
-            ª   
+            ª   README.md  
             +---database
             ª   ª   entry_handler.py
-            ª   ª   
             +---ui
             ª   ª   add_expense.py
             ª   ª   delete_column.py
