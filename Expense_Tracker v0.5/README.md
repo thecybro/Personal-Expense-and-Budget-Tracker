@@ -3,6 +3,10 @@
 You can keep track of all your expenses and compare the amounts of the expenses.
 And the good part is that it's very simple to use and you can add/manage expenses with very little effort.
 
+## Copy paste this to run the program
+*python main.py*
+
+
 ## 📁 Project Structure
 ```+---PROJECTS            
     +---Personal Expense and Budget Tracker
@@ -10,8 +14,7 @@ And the good part is that it's very simple to use and you can add/manage expense
         ª   Expense_Tracker v0.2.py
         ª   Expense_Tracker v0.3.py
         ª   Expense_Tracker v0.4.py
-        ª   README.md
-        ª   
+        ª   README.md   
         +---Expense_Tracker v0.5
             ª   main.py
             ª   README.md  
