@@ -1,3 +1,8 @@
+# For package installation:
+import importlib
+import subprocess
+import sys
+
 #Built-in modules
 import os
 
@@ -15,6 +20,17 @@ from ui.delete_row import DeleteRowWindow
 from ui.delete_column import DeleteColumnValuesWindow
 from ui.display_graph import DisplayGraphWindow
 from ui.show_total import ShowTotalWindow
+
+
+required_packages = ["pathlib","pandas","tkinter","customtkinter","matplotlib"]
+
+for package in required_packages:
+    try:
+        importlib.import_module(package)
+        print("All the required packages are installed.")
+        
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package)
 
 filename = "Expenses.csv"
 
