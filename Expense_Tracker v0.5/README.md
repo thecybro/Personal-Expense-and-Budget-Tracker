@@ -33,10 +33,13 @@ And the good part is that it's very simple to use and you can add/manage expense
                 ª   validator.py
 ```
 
-## Features:-
+## Features
 1. Add a category
 2. Edit a category
 3. Delete a row/category
 4. Delete the values of a column
 5. Display expenses in graph
 6. Show total
+
+[!NOTE]
+Some new features like data encryption and others are expected to be released in future.
