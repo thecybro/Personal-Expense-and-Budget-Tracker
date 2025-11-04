@@ -41,5 +41,7 @@ And the good part is that it's very simple to use and you can add/manage expense
 5. Display expenses in graph
 6. Show total
 
-[!NOTE]
-Some new features like data encryption and others are expected to be released in future.
+<blockquote style="background-color:#e6f7ff; border-left:4px solid #0099ff; padding:10px;">
+<b>📢 Announcement:</b> Version 0.6 pre-release testing begins soon. Expect UI improvements, data encryption and bug fixes.
+</blockquote>
+
