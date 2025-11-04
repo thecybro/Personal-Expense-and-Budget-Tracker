@@ -29,5 +29,5 @@ Sure, there might be alot better apps out there but my friends are some of the b
    - Delete a column
    - Comparing expenses in graphs
 3. **v0.3: GUI based** - New version was created by making it gui based and a cleaner/smoother interface was given to user, but comparing expenses in graph feature & show total spent feature wasn't included.
-4. **v0.4: GUI bassed** - New version was created by fixing the bugs of earlier version, including the lost feature and reducing user's effort as much as possible by making user take decisions via clickable options.
-
+4. **v0.4: GUI based** - New version was created by fixing the bugs of earlier version, including the lost feature and reducing user's effort as much as possible by making user take decisions via clickable options.
+5. **v0.5: GUI based** - New version with all the features of v0.4 plus some extra is under construction..
