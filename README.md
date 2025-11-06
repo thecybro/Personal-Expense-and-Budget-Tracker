@@ -31,3 +31,7 @@ Sure, there might be alot better apps out there but my friends are some of the b
 3. **v0.3: GUI based** - New version was created by making it gui based and a cleaner/smoother interface was given to user, but comparing expenses in graph feature & show total spent feature wasn't included.
 4. **v0.4: GUI based** - New version was created by fixing the bugs of earlier version, including the lost feature and reducing user's effort as much as possible by making user take decisions via clickable options.
 5. **v0.5: GUI based** - New version with all the features of v0.4 plus some extra is under construction..
+
+<blockquote style="background-color:##0ee8e8; border-left:4px solid #e6f7ff; padding:10px;">
+<b>📢 Announcement:</b> Development of v0.6 will soon be started and is expected to include data encryption and GUI improvememts.
+</blockquote>
