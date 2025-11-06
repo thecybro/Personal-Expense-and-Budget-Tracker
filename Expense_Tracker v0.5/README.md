@@ -42,6 +42,6 @@ And the good part is that it's very simple to use and you can add/manage expense
 6. Show total
 
 <blockquote style="background-color:#e6f7ff; border-left:4px solid #0099ff; padding:10px;">
-<b>📢 Announcement:</b> Version 0.6 pre-release testing begins soon. Expect UI improvements, data encryption and bug fixes.
+<b>📢 Announcement:</b> Some small improvements will be done on this version and new version ( v0.6 ) will soon be developed.
 </blockquote>
 
