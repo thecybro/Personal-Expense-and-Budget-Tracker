@@ -1,15 +1,15 @@
 #Built-in modules
 from datetime import datetime
+import tkinter.messagebox as mb
 
 #External modules
 import customtkinter as ctk
-import tkinter.messagebox as mb
 
 #Custom modules
-from database.entry_handler import add_entry
-from utils.file_manager import index_finder
-from utils.validator import validate_float
-from utils import destroyer
+from modules.database.entry_handler import add_entry
+from modules.utils.file_manager import index_finder
+from modules.utils.validator import validate_float
+from modules.utils import destroyer
 
 class AddExpenseWindow(ctk.CTkToplevel):
     def __init__(self, master, path, menu_callback):
@@ -66,7 +66,7 @@ class AddExpenseWindow(ctk.CTkToplevel):
                 mb.showwarning("Error","Amount is needed!!")
                 self.destroy()
                 return 
-            
+        
             current_time = datetime.now()
             date = current_time.strftime("%Y:%m:%d")
 

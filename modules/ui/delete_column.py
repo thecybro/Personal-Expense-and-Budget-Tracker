@@ -1,11 +1,10 @@
-#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 
 #Custom modules
-from utils.file_manager import file_sorter, file_correcter
-from utils.destroyer import destroyer
+from modules.utils.file_manager import file_sorter, file_correcter
+from modules.utils.destroyer import destroyer
 
 class DeleteColumnValuesWindow(ctk.CTkToplevel):
     def __init__(self, master, path, menu_callback):
@@ -46,10 +45,11 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
             ctk.CTkLabel(columns_display_frame, text="Choose the column whose values you wanna delete:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             for i,column in enumerate(available_columns, start=1):
-                if column != "Index":
-                    ctk.CTkRadioButton(columns_display_frame, text=column,variable=self.choice, value=column, command=self.delete_column_values).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                if column != "Index" and column != "Date":
+                    ctk.CTkRadioButton(columns_display_frame, text=column,variable=self.choice, value=column).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
-            ctk.CTkButton(delete_column_values_frame, text="Exit", command=lambda:destroyer(self)).grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkButton(delete_column_values_frame, text="Submit", command=self.delete_column_values).grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkButton(delete_column_values_frame, text="Exit", command=lambda:destroyer(self)).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
 
         except ValueError as e:
             mb.showwarning("Error",f"Some error occured!!: {e}")

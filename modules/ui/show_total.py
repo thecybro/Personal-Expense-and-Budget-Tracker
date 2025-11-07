@@ -1,4 +1,3 @@
-#External modules
 import pandas as pd
 import tkinter.messagebox as mb
 import customtkinter as ctk
@@ -21,7 +20,11 @@ class ShowTotalWindow(ctk.CTkToplevel):
             for Amount in Amounts:
                 total += Amount
             
-            mb.showinfo("Total Spent",f"Your total spent is {total}")
+            if total > 0:
+                mb.showinfo("Total Spent",f"Your total spent is {total}")
+
+            if total <= 0:
+                mb.showwarning("Error","Total has been deleted!!")
 
             self.destroy()
 

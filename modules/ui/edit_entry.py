@@ -1,13 +1,12 @@
-#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 
 #Custom modules
-from database.entry_handler import edit_entry
-from utils.file_manager import file_sorter, file_correcter
-from utils.validator import validate_int 
-from utils.destroyer import destroyer
+from modules.database.entry_handler import edit_entry
+from modules.utils.file_manager import file_sorter, file_correcter
+from modules.utils.validator import validate_int 
+from modules.utils.destroyer import destroyer
 
 class EditEntryWindow(ctk.CTkToplevel):
     def __init__(self, master, path, menu_callback):

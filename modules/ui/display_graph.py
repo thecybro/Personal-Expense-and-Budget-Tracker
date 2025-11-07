@@ -1,10 +1,9 @@
-#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 import matplotlib.pyplot as plt
 
-from utils.destroyer import destroyer
+from modules.utils.destroyer import destroyer
 
 class DisplayGraphWindow(ctk.CTkToplevel):
     def __init__(self, master, path, menu_callback):
@@ -13,7 +12,6 @@ class DisplayGraphWindow(ctk.CTkToplevel):
         self.menu_callback = menu_callback
 
         self.title("Display Graph")
-
 
         bars = ["pie","line","bar","box","barh","area","hist"]
         bars_count = len(bars)
@@ -44,6 +42,7 @@ class DisplayGraphWindow(ctk.CTkToplevel):
             submit_frame.columnconfigure(i, weight=1)
 
         try:
+
             #Categories selection
             self.category_selection_var = ctk.StringVar()
 
@@ -65,8 +64,8 @@ class DisplayGraphWindow(ctk.CTkToplevel):
 
             ctk.CTkButton(submit_frame, text="Exit", command = lambda:destroyer(self)).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Some error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error",f"Some error occured!!")
             self.destroy()
 
             self.menu_callback()
@@ -76,6 +75,11 @@ class DisplayGraphWindow(ctk.CTkToplevel):
     def deploy_graph(self):
         try:
             df = pd.read_csv(self.path)
+
+            if not df["Amount"].values:
+                mb.showwarning("Error","All amounts must be present!!")
+                self.destroy()
+
 
             graph = self.graph_type.get()
             category_choice = self.category_selection_var.get()
@@ -104,6 +108,11 @@ class DisplayGraphWindow(ctk.CTkToplevel):
                     selected_vars[category] = var
 
                 def deploy():
+                    for value in df["Amount"].values:
+                        if not value:
+                            mb.showwarning("Error","All amounts must be present!!")
+                            self.destroy()
+            
                     selected = [cat for cat, var in selected_vars.items() if var.get()]
                     if not selected:
                         mb.showwarning("Error", "Please select at least one category.")
@@ -145,8 +154,8 @@ class DisplayGraphWindow(ctk.CTkToplevel):
 
                 self.menu_callback()
 
-        except Exception as e:
-            mb.showwarning("Error", f"Some error occurred: {e}")
+        except Exception:
+            mb.showwarning("Error", f"Some error occurred")
             if 'win' in locals():
                 win.destroy()
 

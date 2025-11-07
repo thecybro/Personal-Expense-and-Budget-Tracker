@@ -15,4 +15,3 @@ def edit_entry(path, index_count, column_name, new_value):
     df.to_csv(path, index=False)
     
     value = df.loc[index_count-1, column_name]
-

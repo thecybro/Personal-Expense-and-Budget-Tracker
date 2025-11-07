@@ -1,11 +1,10 @@
-#External modules
 import customtkinter as ctk
 import pandas as pd
 import tkinter.messagebox as mb
 
 #Custom modules
-from utils.file_manager import file_sorter, file_correcter
-from utils.destroyer import destroyer
+from modules.utils.file_manager import file_sorter, file_correcter
+from modules.utils.destroyer import destroyer
 
 class DeleteRowWindow(ctk.CTkToplevel):
     def __init__(self, master, path, menu_callback):
