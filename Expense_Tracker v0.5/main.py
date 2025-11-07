@@ -4,19 +4,27 @@ import subprocess
 import sys
 import os
 
+from tkinter import messagebox as mb
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+
 #External modules
 from pathlib import Path
 import customtkinter as ctk
 
 #Custom modules
-from utils.destroyer import destroyer
+from modules.utils.destroyer import destroyer
 
-from ui.add_expense import AddExpenseWindow
-from ui.edit_entry import EditEntryWindow
-from ui.delete_row import DeleteRowWindow
-from ui.delete_column import DeleteColumnValuesWindow
-from ui.display_graph import DisplayGraphWindow
-from ui.show_total import ShowTotalWindow
+from modules.ui.add_expense import AddExpenseWindow
+from modules.ui.edit_entry import EditEntryWindow
+from modules.ui.delete_row import DeleteRowWindow
+from modules.ui.delete_column import DeleteColumnValuesWindow
+from modules.ui.display_graph import DisplayGraphWindow
+from modules.ui.show_total import ShowTotalWindow
 
 
 required_packages = ["pandas","customtkinter","matplotlib"]
@@ -39,8 +47,6 @@ else:
     mb.showinfo("Success","All packages are successfully installed.")
 
 filename = "Expenses.csv"
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'modules'))
 
 base_dir = Path(__file__).parent
 path = base_dir/filename
