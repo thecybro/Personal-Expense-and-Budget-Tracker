@@ -22,15 +22,24 @@ from ui.display_graph import DisplayGraphWindow
 from ui.show_total import ShowTotalWindow
 
 
-required_packages = ["pathlib","pandas","tkinter","customtkinter","matplotlib"]
+required_packages = ["pandas","customtkinter","matplotlib"]
+
+missing = []
 
 for package in required_packages:
     try:
         importlib.import_module(package)
-        print("All the required packages are installed.")
         
     except ImportError:
+        missing.append(package)
+
+if missing:
+    mb.showwarning("Error",f"The following packages are missing and will be installed:{','.join(missing)}")
+    for package in missing:
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+else:
+    mb.showinfo("Success","All packages are successfully installed.")
 
 filename = "Expenses.csv"
 
