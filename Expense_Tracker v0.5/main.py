@@ -30,7 +30,7 @@ for package in required_packages:
         print("All the required packages are installed.")
         
     except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package)
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 filename = "Expenses.csv"
 
