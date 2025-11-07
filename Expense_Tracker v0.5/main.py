@@ -1,15 +1,12 @@
-# For package installation:
+#Built-in modules
 import importlib
 import subprocess
 import sys
-
-#Built-in modules
 import os
 
 #External modules
 from pathlib import Path
 import customtkinter as ctk
-from tkinter import messagebox as mb
 
 #Custom modules
 from utils.destroyer import destroyer
@@ -42,6 +39,8 @@ else:
     mb.showinfo("Success","All packages are successfully installed.")
 
 filename = "Expenses.csv"
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'modules'))
 
 base_dir = Path(__file__).parent
 path = base_dir/filename
