@@ -7,10 +7,9 @@ from modules.utils.file_manager import file_sorter, file_correcter
 from modules.utils.destroyer import destroyer
 
 class DeleteColumnValuesWindow(ctk.CTkToplevel):
-    def __init__(self, master, path, menu_callback):
+    def __init__(self, master, path):
         super().__init__(master)
         self.path = path
-        self.menu_callback = menu_callback
 
         self.title("Delete Column Values")
 
@@ -51,11 +50,11 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
             ctk.CTkButton(delete_column_values_frame, text="Submit", command=self.delete_column_values).grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
             ctk.CTkButton(delete_column_values_frame, text="Exit", command=lambda:destroyer(self)).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Some error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Some error occured while loading delete column values!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
 
     #To delete column values
@@ -75,10 +74,10 @@ class DeleteColumnValuesWindow(ctk.CTkToplevel):
 
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Some error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Some error occured while deleting column values!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()

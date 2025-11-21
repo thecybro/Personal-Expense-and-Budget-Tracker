@@ -9,10 +9,9 @@ from modules.utils.validator import validate_int
 from modules.utils.destroyer import destroyer
 
 class EditEntryWindow(ctk.CTkToplevel):
-    def __init__(self, master, path, menu_callback):
+    def __init__(self, master, path):
         super().__init__(master)
         self.path = path
-        self.menu_callback = menu_callback
 
         self.title("Edit Category") 
 
@@ -23,6 +22,9 @@ class EditEntryWindow(ctk.CTkToplevel):
 
         available_indexes = df["Index"].values
         indexes_count = len(available_indexes)
+
+        available_categories = df["Category"].values
+        categories_count = len(available_categories)
 
         available_columns = df.columns
         columns_count = len(available_columns)
@@ -57,10 +59,10 @@ class EditEntryWindow(ctk.CTkToplevel):
             validate_cmd = self.register(validate_int)
 
             self.index_var = ctk.IntVar()
-            ctk.CTkLabel(indexes_frame, text="Choose the index:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkLabel(indexes_frame, text="Choose the index/category:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
-            for i,index in enumerate(available_indexes, start=1):
-                ctk.CTkRadioButton(indexes_frame, text=index, variable=self.index_var, value=index).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+            for i,c in zip(available_indexes, available_categories):
+                ctk.CTkRadioButton(indexes_frame, text=f"{i}. {c}", variable=self.index_var, value=i).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
             self.column_var = ctk.StringVar()
             ctk.CTkLabel(columns_frame, text="Choose the column: ").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
@@ -77,11 +79,11 @@ class EditEntryWindow(ctk.CTkToplevel):
 
             ctk.CTkButton(submit_frame, text="Exit", command = lambda:destroyer(self)).grid(row=1, column=1, sticky='nsew', padx=10, pady=10)
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Error detected..{e}")
+        except Exception:
+            mb.showwarning("Error","Error detected while loading edit entry!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
     #To edit the entry
     def edit_entry(self):
@@ -117,10 +119,10 @@ class EditEntryWindow(ctk.CTkToplevel):
 
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Error occured while editing entry!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()

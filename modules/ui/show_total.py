@@ -3,12 +3,13 @@ import tkinter.messagebox as mb
 import customtkinter as ctk
 
 class ShowTotalWindow(ctk.CTkToplevel):
-    def __init__(self, master, path, menu_callback):
+    def __init__(self, master, path):
         super().__init__(master)
         self.path = path
-        self.menu_callback = menu_callback
 
         self.title("Total Display")
+
+        self.iconify()
 
         df = pd.read_csv(self.path)
 
@@ -28,10 +29,10 @@ class ShowTotalWindow(ctk.CTkToplevel):
 
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Error occured while loading total!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()

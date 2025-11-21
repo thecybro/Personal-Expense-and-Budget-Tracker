@@ -20,6 +20,7 @@ import customtkinter as ctk
 from modules.utils.destroyer import destroyer
 
 from modules.ui.add_expense import AddExpenseWindow
+from modules.ui.view_expenses import ViewExpensesWindow
 from modules.ui.edit_entry import EditEntryWindow
 from modules.ui.delete_row import DeleteRowWindow
 from modules.ui.delete_column import DeleteColumnValuesWindow
@@ -44,7 +45,7 @@ if missing:
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 else:
-    mb.showinfo("Success","All packages are successfully installed.")
+    print("All packages are successfully installed.")
 
 filename = "Expenses.csv"
 
@@ -76,7 +77,7 @@ class ExpenseTracker(ctk.CTk):
             self.menu_frame.pack(fill="both", expand=True)
 
             #self.menu_frame configuration
-            for i in range(8):
+            for i in range(9):
                 self.menu_frame.rowconfigure(i, weight=1)
                 self.menu_frame.columnconfigure(i, weight=1)
 
@@ -84,35 +85,46 @@ class ExpenseTracker(ctk.CTk):
             ctk.CTkLabel(self.menu_frame, text="Choose appropriate option:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             ctk.CTkRadioButton(self.menu_frame, text="Add a category", command = self.show_add_expense).grid(row=1, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkRadioButton(self.menu_frame, text="Edit a category", command = self.show_edit_entry).grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkRadioButton(self.menu_frame, text="Delete a row/category", command = self.show_delete_row).grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkRadioButton(self.menu_frame, text="Delete the values of a column", command = self.show_delete_column_values).grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkRadioButton(self.menu_frame, text="Display expenses in graph", command = self.show_display_graph).grid(row=5, column=0, sticky='nsew', padx=10, pady=10)
-            ctk.CTkRadioButton(self.menu_frame, text="Show total", command = self.show_total).grid(row=6, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(self.menu_frame, text="View Expenses", command = self.show_view_expenses).grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(self.menu_frame, text="Edit a category", command = self.show_edit_entry).grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(self.menu_frame, text="Delete a row/category", command = self.show_delete_row).grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(self.menu_frame, text="Delete the values of a column", command = self.show_delete_column_values).grid(row=5, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(self.menu_frame, text="Display expenses in graph", command = self.show_display_graph).grid(row=6, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkRadioButton(self.menu_frame, text="Show total", command = self.show_total).grid(row=7, column=0, sticky='nsew', padx=10, pady=10)
 
-            ctk.CTkButton(self.menu_frame, text="Exit", command=lambda:destroyer(self)).grid(row=7, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkButton(self.menu_frame, text="Exit", command=lambda:destroyer(self)).grid(row=8, column=0, sticky='nsew', padx=10, pady=10)
 
-        except ValueError as e:
-            mb.showwarning("Error",f"{e}")
+        except Exception:
+            mb.showwarning("Error","Error occured while loading menu!!")
             self.destroy()
 
     def show_add_expense(self):
-        AddExpenseWindow(self, path, self.show_menu)
+        self.iconify() #To hide root window
+        AddExpenseWindow(self, path)
+
+    def show_view_expenses(self):
+        self.iconify()
+        ViewExpensesWindow(self, path)
 
     def show_edit_entry(self):
-        EditEntryWindow(self, path, self.show_menu)
+        self.iconify()
+        EditEntryWindow(self, path)
 
     def show_delete_row(self):
-        DeleteRowWindow(self, path, self.show_menu)
+        self.iconify()
+        DeleteRowWindow(self, path)
 
     def show_delete_column_values(self):
-        DeleteColumnValuesWindow(self, path, self.show_menu)
+        self.iconify()
+        DeleteColumnValuesWindow(self, path)
 
     def show_display_graph(self):
-        DisplayGraphWindow(self, path, self.show_menu)
+        self.iconify()
+        DisplayGraphWindow(self, path)
 
     def show_total(self):
-        ShowTotalWindow(self, path, self.show_menu)
+        self.iconify()
+        ShowTotalWindow(self, path)
     
 if __name__ == "__main__":
     app = ExpenseTracker()

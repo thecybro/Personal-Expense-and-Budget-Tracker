@@ -7,10 +7,9 @@ from modules.utils.file_manager import file_sorter, file_correcter
 from modules.utils.destroyer import destroyer
 
 class DeleteRowWindow(ctk.CTkToplevel):
-    def __init__(self, master, path, menu_callback):
+    def __init__(self, master, path):
         super().__init__(master)
         self.path = path
-        self.menu_callback = menu_callback
 
         self.title("Delete Row")
 
@@ -36,10 +35,10 @@ class DeleteRowWindow(ctk.CTkToplevel):
         try:
             self.index_var = ctk.IntVar()
 
-            ctk.CTkLabel(delete_row_frame, text="Choose the category of the row you want to delete:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            ctk.CTkLabel(delete_row_frame, text="Choose the row you want to delete:").grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
 
             for i, category in enumerate(available_rows, start=1):
-                ctk.CTkRadioButton(delete_row_frame, text=category, variable=self.index_var, value=i).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
+                ctk.CTkRadioButton(delete_row_frame, text=f"{i}. {category}", variable=self.index_var, value=i).grid(row=i, column=0, sticky='nsew', padx=10, pady=10)
 
             r = rows_count + 1
 
@@ -47,11 +46,11 @@ class DeleteRowWindow(ctk.CTkToplevel):
 
             ctk.CTkButton(delete_row_frame, text="Exit", command = lambda:destroyer(self)).grid(row=r+1, column=0, sticky='nsew', padx=5, pady=5)
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Error occured!!:{e}")
+        except Exception:
+            mb.showwarning("Error","Error occured while loading delete row!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
 
     #To delete the row
@@ -70,10 +69,10 @@ class DeleteRowWindow(ctk.CTkToplevel):
 
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Some error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Some error occured while deleting row!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()

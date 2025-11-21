@@ -12,10 +12,9 @@ from modules.utils.validator import validate_float
 from modules.utils import destroyer
 
 class AddExpenseWindow(ctk.CTkToplevel):
-    def __init__(self, master, path, menu_callback):
+    def __init__(self, master, path):
         super().__init__(master)
         self.path = path
-        self.menu_callback = menu_callback
 
         self.title("Add Category")
 
@@ -44,18 +43,18 @@ class AddExpenseWindow(ctk.CTkToplevel):
 
             ctk.CTkButton(self, text="Exit", command = lambda:destroyer(self)).grid(row=4, column=1, sticky='nsew', padx=10, pady=10)
     
-        except ValueError as e:
-            mb.showwarning("Error",f"Some error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Some error occured while loading save expense!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
         
     #To save the expense
     def save_expense(self):
         try:
             category = self.category_entry.get().strip().capitalize()
             amount = float(self.amount_entry.get())
-            notes = self.note_entry.get().strip()
+            notes = self.note_entry.get().strip().capitalize()
 
             if not category:
                 mb.showwarning("Error","Category is needed!!")
@@ -79,10 +78,10 @@ class AddExpenseWindow(ctk.CTkToplevel):
             mb.showinfo("Success",f"Category '{category}' has been added..")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
-        except ValueError as e:
-            mb.showwarning("Error",f"Error occured!!: {e}")
+        except Exception:
+            mb.showwarning("Error","Error occured while saving expense!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()

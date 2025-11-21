@@ -6,10 +6,9 @@ import matplotlib.pyplot as plt
 from modules.utils.destroyer import destroyer
 
 class DisplayGraphWindow(ctk.CTkToplevel):
-    def __init__(self, master, path, menu_callback):
+    def __init__(self, master, path):
         super().__init__(master)
         self.path = path
-        self.menu_callback = menu_callback
 
         self.title("Display Graph")
 
@@ -65,10 +64,10 @@ class DisplayGraphWindow(ctk.CTkToplevel):
             ctk.CTkButton(submit_frame, text="Exit", command = lambda:destroyer(self)).grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
 
         except Exception:
-            mb.showwarning("Error",f"Some error occured!!")
+            mb.showwarning("Error","Some error occured while loading display graph!!")
             self.destroy()
 
-            self.menu_callback()
+            self.master.deiconify()
 
 
     #To deploy the graph
@@ -76,7 +75,7 @@ class DisplayGraphWindow(ctk.CTkToplevel):
         try:
             df = pd.read_csv(self.path)
 
-            if not df["Amount"].values:
+            if not df["Amount"].any():
                 mb.showwarning("Error","All amounts must be present!!")
                 self.destroy()
 
@@ -91,14 +90,19 @@ class DisplayGraphWindow(ctk.CTkToplevel):
 
             available_categories = df["Category"].unique()
 
-            # Create a new window
-            win = ctk.CTkToplevel(self)
-            win.title("Deploy Graph")
-
-            graph_deploy_frame = ctk.CTkFrame(win)
-            graph_deploy_frame.pack(fill="both", expand=True)
 
             if category_choice == "Select categories":
+
+                # Create a new window
+                win = ctk.CTkToplevel(self)
+                win.title("Deploy Graph")
+
+                graph_deploy_frame = ctk.CTkFrame(win)
+                graph_deploy_frame.pack(fill="both", expand=True)
+
+                self.iconify()
+                win.deiconify()
+
                 ctk.CTkLabel(graph_deploy_frame, text="Select categories:").grid(row=0, column=0, padx=10, pady=10)
                 selected_vars = {}
 
@@ -121,44 +125,48 @@ class DisplayGraphWindow(ctk.CTkToplevel):
 
                     data = df[df["Category"].isin(selected)].groupby("Category")["Amount"].sum()
 
+                    win.iconify()
                     plt.figure()
 
                     if graph == "pie":
                         data.plot(kind="pie", autopct='%1.1f%%')
-                        win.destroy()
                     else:
                         data.plot(kind=graph)
-                        win.destroy()
 
                     plt.title("Category vs Amount")
                     plt.xlabel("Category")
                     plt.ylabel("Amount")
                     plt.show()
+                    self.destroy()
 
-                    self.menu_callback()
+                    self.master.deiconify()
 
                 ctk.CTkButton(graph_deploy_frame, text="Show Graph", command=deploy).grid(row=len(available_categories)+1, column=0, padx=10, pady=10)
                 ctk.CTkButton(graph_deploy_frame, text="Exit", command=lambda: destroyer(win)).grid(row=len(available_categories)+2, column=0, padx=10, pady=10)
 
             else:
                 data = df.groupby("Category")["Amount"].sum()
+
+                win.iconify()
                 plt.figure()
+                
                 if graph == "pie":
                     data.plot(kind="pie", autopct='%1.1f%%')
                 else:
                     data.plot(kind=graph)
+
                 plt.title("Category vs Amount")
                 plt.xlabel("Category")
                 plt.ylabel("Amount")
                 plt.show()
+                self.destroy()
 
-                self.menu_callback()
+                self.master.deiconify()
 
         except Exception:
-            mb.showwarning("Error", f"Some error occurred")
+            mb.showwarning("Error", "Some error occurred while displaying graph!!")
             if 'win' in locals():
                 win.destroy()
 
-                self.menu_callback()
-
+                self.master.deiconify()
 
