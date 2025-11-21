@@ -1,5 +1,5 @@
 # About app
-The app 'Personal Expense and Budget Tracker' is an app which:
+The app *Personal Expense and Budget Tracker* is an app which:
 - Lets you add the category, amount and notes of the expenses.
 - Allows you to:
    - View your expenses in a table.
