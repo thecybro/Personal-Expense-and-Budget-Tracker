@@ -1,7 +1,8 @@
 # About app
 The app 'Personal Expense and Budget Tracker' is an app which:
-- Lets you add the category, amount of the expenses and notes if you want your future self to know something after seeing it.
+- Lets you add the category, amount and notes of the expenses.
 - Allows you to:
+   - View your expenses in a table.
    - Edit value of any row/column you want.
    - Delete any category/row you want.
    - Delete all values of any column you want.
@@ -23,15 +24,15 @@ This project was created because I (Amrit Gautam, the creater) realized that my 
 Sure, there might be alot better apps out there but my friends are some of the best procastinators out there, so they won't download those apps even if they did after i insisted them, they would stop using it within a day. So, I thought that if I told them to try this new app I created and tell me how good or bad it is, they might stick for a while even if it's to make me feel good and I am able to make the app interesting, they might stick to it and potentially, their bad habits might be solved.
 
 ## Updates and versions:-
-1. **v0.1: Terminal based** - A very basic and limited version of the app was created which had major flaws.
-2. **v0.2: Terminal based** - New version was created after fixing the flaws of earlier verison and adding new features such as:
+1. **v0.1: Terminal based** - A very basic and limited version of the app is created.
+2. **v0.2: Terminal based** - New version is created after fixing the flaws of earlier verison and adding new features such as:
    - Delete a row
    - Delete a column
    - Comparing expenses in graphs
-3. **v0.3: GUI based** - New version was created by making it gui based and a cleaner/smoother interface was given to user, but comparing expenses in graph feature & show total spent feature wasn't included.
-4. **v0.4: GUI based** - New version was created by fixing the bugs of earlier version, including the lost feature and reducing user's effort as much as possible by making user take decisions via clickable options.
-5. **v0.5: GUI based** - New version with all the features of v0.4 plus some extra is under construction..
+3. **v0.3: GUI based** - New version is created by making it gui based and a cleaner/smoother interface is given to user, but comparing expenses in graph feature & show total spent feature isn't available.
+4. **v0.4: GUI based** - New version is created by fixing the bugs of earlier version, including the lost features such as *compare expenses in graph*,*show total spent* and reducing user's effort as much as possible by making user take decisions via clickable options.
+5. **v0.5: GUI based** - New version is created by adding new feature *View Expenses* and GUI improvements have been done.
 
 <blockquote style="background-color:##0ee8e8; border-left:4px solid #e6f7ff; padding:10px;">
-<b>📢 Announcement:</b> Development of v0.6 will soon be started and is expected to include data encryption and GUI improvememts.
+<b>📢 Announcement:</b> Development of v0.6 will be started if demand is there and is expected to include data encryption and GUI improvememts.
 </blockquote>
